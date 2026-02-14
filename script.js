@@ -38,16 +38,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Countdown
     function updateCountdown() {
-        const now = new Date();
-        const target = new Date(now.getFullYear(), 1, 14); // Feb 14
-        if (now > target) target.setFullYear(now.getFullYear() + 1);
-        const diff = target - now;
+    const now = new Date();
 
-        days.textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-        hours.textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        minutes.textContent = Math.floor((diff / (1000 * 60)) % 60);
-        seconds.textContent = Math.floor((diff / 1000) % 60);
-    }
+    if (now >= new Date("February 14, 2026 00:00:00"))
+        return clearInterval(countdownInterval);
+
+    const target = new Date("February 13, 2026 00:00:00");
+    const diff = target - now;
+
+    days.textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+    hours.textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    minutes.textContent = Math.floor((diff / (1000 * 60)) % 60);
+    seconds.textContent = Math.floor((diff / 1000) % 60);
+}
+
+const countdownInterval = setInterval(updateCountdown, 1000);
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -98,4 +103,5 @@ function startMusicAutomatically() {
 }
 
 startMusicAutomatically();
+
 });
